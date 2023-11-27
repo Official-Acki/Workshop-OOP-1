@@ -1,8 +1,8 @@
 package acki.workshop1;
 
 public class Floor {
-    private Sensor[] sensors;
-    private Actuator[] actuators;
+    private Sensor[] sensors = new Sensor[4];
+    private Actuator[] actuators = new Actuator[4];
     private Range co2Thresh = new Range(1, 400); // ppm
     private Range tempThresh = new Range(14, 20); // Celsius
 
@@ -147,29 +147,35 @@ public class Floor {
     }
 
     public void removeActuator(Actuator actuator) {
-        for (int i = 0; i < this.actuators.length; i++) {
-            if (this.actuators[i] == actuator) {
-                this.actuators[i] = null;
-                return;
+        // Checking if the actuator is already null or if the length of the array is less than or equal to zero.
+        if (actuator == null || actuators.length <= 0) {
+            return;
+        }
+        Actuator[] newActuators = new Actuator[actuators.length - 1];
+        // Making a new actuator array that is one length smaller, 
+        int index = 0;
+        for (int i = 0; i < actuators.length; i++) {
+            if (actuators[i] != actuator) {
+                newActuators[index] = actuators[i];
+                index++;
             }
         }
+        actuators = newActuators;
+
 
     }
 
-    public void evaluateAndAct()
-    {
+    public void evaluateAndAct() {
         // Compare Temperature to threshold
         short evaluated = tempThresh.evaluate(this.getAvgTemp().getC());
-        if (evaluated == 2) 
-        {
+        if (evaluated == 2) {
             // Temperature is too high open windows
             for (int i = 0; i < this.actuators.length; i++) {
                 if (this.actuators[i] != null && this.actuators[i] instanceof WindowActuator) {
                     ((WindowActuator) this.actuators[i]).setOpen(true);
                 }
             }
-        } else if (evaluated == 1)
-        {
+        } else if (evaluated == 1) {
             // Temperature is too low close windows
             for (int i = 0; i < this.actuators.length; i++) {
                 if (this.actuators[i] != null && this.actuators[i] instanceof WindowActuator) {
@@ -180,23 +186,45 @@ public class Floor {
 
         // Compare CO2 to threshold
         evaluated = co2Thresh.evaluate(this.getAvgCO2());
-        if (evaluated == 2) 
-        {
+        if (evaluated == 2) {
             // CO2 is too high open vents
             for (int i = 0; i < this.actuators.length; i++) {
-                if (this.actuators[i] != null && this.actuators[i] instanceof VentActuator) {
+                if (this.actuators[i] != null && this.actuators[i] instanceof VentilationActuator) {
                     ((VentilationActuator) this.actuators[i]).setOpen(true);
                 }
             }
-        } else if (evaluated == 1)
-        {
+        } else if (evaluated == 1) {
             // CO2 is too low close vents
             for (int i = 0; i < this.actuators.length; i++) {
-                if (this.actuators[i] != null && this.actuators[i] instanceof VentActuator) {
+                if (this.actuators[i] != null && this.actuators[i] instanceof VentilationActuator) {
                     ((VentilationActuator) this.actuators[i]).setOpen(false);
                 }
             }
-        }   low close windows}ol oot si erutarep
         }
+    }
+
+    @Override
+    public String toString() {
+        int tempSens = 0, co2Sens = 0;
+        for (Sensor sensor : this.sensors) {
+            if (sensor instanceof TemperatureSensor) {
+                tempSens++;
+            } else if (sensor instanceof CO2Sensor) {
+                co2Sens++;
+            }
+        }
+        int windowActuator = 0, ventActuator = 0;
+        for (Actuator actuator : actuators) {
+            if (actuator instanceof WindowActuator) {
+                windowActuator++;
+            } else if (actuator instanceof VentilationActuator) {
+                ventActuator++;
+            }
+        }
+        String output = "";
+        output += "Temperature: " + this.getAvgTemp() + "°C, CO2: " + this.getAvgCO2() + ", Temperature sensors: "
+                + tempSens + ", CO2 sensors: " + co2Sens + ", Window actuators: " + windowActuator
+                + ", Ventilation actuators: " + ventActuator;
+        return output;
     }
 }

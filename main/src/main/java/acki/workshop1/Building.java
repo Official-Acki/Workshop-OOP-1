@@ -98,4 +98,15 @@ public class Building {
         // Not implemented.
         throw new UnsupportedOperationException("Not implemented");
     }
+
+    @Override
+    public String toString() {
+        String output = "";
+        for (int i = 0; i < floors.length; i++) {
+            if (floors[i] != null) {
+                output += "Floor " + i + ": " + floors[i].toString() + "\n";
+            }
+        }
+        return output;
+    }
 }

@@ -3,6 +3,10 @@ package acki.workshop1;
 public class CO2Sensor extends Sensor {
     private CO2 co2;
 
+    public CO2Sensor() {
+        co2 = new CO2();
+    }
+
     @Override
     public Object getReading() {
         return co2;
