@@ -1,9 +1,9 @@
-package main.java.acki.workshop1;
+package acki.workshop1;
 
 public class Building {
     private Floor[] floors = new Floor[10];
 
-    public addFloor(Floor floor) {
+    public void addFloor(Floor floor) {
         // Check through the array to find the next empty spot
         for (int i = 0; i < floors.length; i++) {
             if (floors[i] == null) {
@@ -27,8 +27,7 @@ public class Building {
         this.floors = newFloors;
     }
 
-    public removeFloor(Floor floor)
-    {
+    public void removeFloor(Floor floor) {
         // Check through the array to find the floor
         for (int i = 0; i < floors.length; i++) {
             if (floors[i] == floor) {
@@ -53,8 +52,7 @@ public class Building {
         this.floors = newFloors;
     }
 
-    public removeFloor(int index)
-    {
+    public void removeFloor(int index) {
         // Check if the index is within bounds.
         if (index < 0 || index >= floors.length)
         {
@@ -81,8 +79,7 @@ public class Building {
         this.floors = newFloors;
     }
 
-    public Floor getFloor(int index)
-    {
+    public Floor getFloor(int index) {
         // Check if the index is within bounds.
         if (index < 0 || index >= floors.length)
         {
@@ -92,14 +89,13 @@ public class Building {
         return floors[index];
     }
 
-    public Temperature getAvgTemp()
-    {
+    public Temperature getAvgTemp() {
         // Not implemented.
-        throw new Exception("Not implemented");
+        throw new UnsupportedOperationException("Not implemented");
     }
-    public CO2 getAvgCO2()
-    {
+
+    public CO2 getAvgCO2() throws Exception {
         // Not implemented.
-        throw new Exception("Not implemented");
+        throw new UnsupportedOperationException("Not implemented");
     }
 }

@@ -1,4 +1,4 @@
-package main.java.acki.workshop1;
+package acki.workshop1;
 
 public class TemperatureSensor extends Sensor {
     private Temperature temperature;
