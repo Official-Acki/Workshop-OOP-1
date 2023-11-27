@@ -1,11 +1,18 @@
 package acki.workshop1;
 
-public class Actuator {
+public abstract class Actuator {
    
     boolean isOpen;
 
-    public void setOpen(boolean){
-        
+    public Actuator(boolean isOpen) {
+        this.isOpen = isOpen;
     }
-    
+
+    public void setOpen(boolean state){
+        this.isOpen = state;
+    }
+
+    public boolean getOpen(){
+        return this.isOpen;
+    }
 }
